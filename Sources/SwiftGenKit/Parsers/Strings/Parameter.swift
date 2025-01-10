@@ -31,7 +31,7 @@ extension Strings.Parameter {
         from string: String,
         type: Strings.PlaceholderType
     ) -> [Strings.Parameter] {
-        let results = parameterNameRegEx.matches(
+        let results = namedParameterRegEx.matches(
             in: string,
             options: [],
             range: NSRange(location: 0, length: string.utf16.count)
@@ -57,7 +57,7 @@ private extension Strings.Parameter {
     /// - Note: The pattern will match sequences like `{{parameterName}}`, where `parameterName` consists of
     /// alphanumeric characters and underscores. The expression allows for optional whitespace both inside
     /// and outside the braces.
-    static let parameterNameRegEx: NSRegularExpression = {
+    static let namedParameterRegEx: NSRegularExpression = {
         do {
             return try NSRegularExpression(
                 pattern: #"\{\{\s*([a-zA-Z0-9_]+)\s*\}\}"#,
