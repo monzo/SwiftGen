@@ -98,6 +98,20 @@ final class StringsParameterTests: XCTestCase {
         }
     }
     
+    func test_extractParameterNames_regexWorksWithOrdinalSuffix() {
+        // Given
+        let stringWithOrdinalSuffix = "{{parameterName}}th"
+        
+        // When
+        let parameterNames = Strings.Parameter.extractParameterNames(
+            from: stringWithOrdinalSuffix,
+            type: .object
+        )
+        
+        // Then
+        XCTAssertEqual(parameterNames, [.init(name: "parameterName", type: .object)])
+    }
+    
     func test_extractParameterNames_returnsStringPlaceholderType() {
         // Given
         let placeholderType = Strings.PlaceholderType.object
