@@ -1,0 +1,3 @@
+"no_parameter" = "This string has no named parameters";
+"one_parameter" = "Hello, {{name}}!";
+"two_parameters" = "Welcome, {{name}}! You have {{messageCount}} unread messages.";
