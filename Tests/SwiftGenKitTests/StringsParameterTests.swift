@@ -1,10 +1,3 @@
-//
-//  StringsParameterTests.swift
-//  
-//
-//  Created by Mohammed Ahmad on 10/01/2025.
-//
-
 @testable import SwiftGenKit
 import XCTest
 
