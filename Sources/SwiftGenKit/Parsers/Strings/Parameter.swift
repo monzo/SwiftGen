@@ -1,10 +1,3 @@
-//
-//  Parameter.swift
-//
-//
-//  Created by Mohammed Ahmad on 09/01/2025.
-//
-
 import Foundation
 
 // MARK: - Parameter Model
