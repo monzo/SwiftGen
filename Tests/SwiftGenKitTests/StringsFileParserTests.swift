@@ -47,7 +47,7 @@ final class StringsFileParserTests: XCTestCase {
             [
                 "Hello, {{name}}!",
                 "This string has no named parameters",
-                "Welcome, {{name}}! You have {{message_count}} unread messages."
+                "Welcome, {{name}}! You have {{messageCount}} unread messages."
             ]
         )
     }
@@ -86,7 +86,7 @@ final class StringsFileParserTests: XCTestCase {
             thirdEntryParameters,
             [
                 .init(name: "name", type: .object),
-                .init(name: "message_count", type: .object)
+                .init(name: "messageCount", type: .object)
             ]
         )
     }
