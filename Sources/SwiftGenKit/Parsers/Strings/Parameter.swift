@@ -48,12 +48,12 @@ private extension Strings.Parameter {
     /// This regular expression is used to match named parameters embedded within double curly braces in a string.
     ///
     /// - Note: The pattern will match sequences like `{{parameterName}}`, where `parameterName` consists of
-    /// alphanumeric characters and underscores. The expression allows for optional whitespace both inside
-    /// and outside the braces.
+    /// alphanumeric characters and underscores, and must start with a lowercase letter. The expression allows
+    /// for optional whitespace both inside and outside the braces.
     static let namedParameterRegEx: NSRegularExpression = {
         do {
             return try NSRegularExpression(
-                pattern: #"\{\{\s*([a-zA-Z0-9_]+)\s*\}\}"#,
+                pattern: #"\{\{\s*([a-z][a-z0-9_]+)\s*\}\}"#,
                 options: []
             )
         } catch {
