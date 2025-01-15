@@ -43,12 +43,13 @@ final class StringsDictFileParserTests: XCTestCase {
         // Then
         let parameters = stringsDictEntry
             .map { $0.parameters }
-            .filter { !$0.isEmpty }
             .sorted(by: { $0.count < $1.count })
         
+        let firstEntryParameters = parameters[0]
+        XCTAssertEqual(firstEntryParameters.count, 1)
         XCTAssertEqual(
-            parameters[0],
-            [.init(name: "potCount", type: .int)]
+            firstEntryParameters,
+            [.init(name: "pot_count", type: .int)]
         )
     }
 }

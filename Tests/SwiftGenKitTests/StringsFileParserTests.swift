@@ -47,7 +47,7 @@ final class StringsFileParserTests: XCTestCase {
             [
                 "Hello, {{name}}!",
                 "This string has no named parameters",
-                "Welcome, {{name}}! You have {{messageCount}} unread messages."
+                "Welcome, {{name}}! You have {{message_count}} unread messages."
             ]
         )
     }
@@ -62,18 +62,31 @@ final class StringsFileParserTests: XCTestCase {
         // Then
         let parameters = stringsEntry
             .map { $0.parameters }
-            .filter { !$0.isEmpty }
             .sorted(by: { $0.count < $1.count })
         
+        let firstEntryParameters = parameters[0]
+        XCTAssertEqual(firstEntryParameters.count, 0)
         XCTAssertEqual(
-            parameters[0],
-            [.init(name: "name", type: .object)]
+            firstEntryParameters,
+            []
         )
+        
+        let secondEntryParameters = parameters[1]
+        XCTAssertEqual(secondEntryParameters.count, 1)
         XCTAssertEqual(
-            parameters[1],
+            secondEntryParameters,
+            [
+                .init(name: "name", type: .object)
+            ]
+        )
+        
+        let thirdEntryParameters = parameters[2]
+        XCTAssertEqual(thirdEntryParameters.count, 2)
+        XCTAssertEqual(
+            thirdEntryParameters,
             [
                 .init(name: "name", type: .object),
-                .init(name: "messageCount", type: .object)
+                .init(name: "message_count", type: .object)
             ]
         )
     }

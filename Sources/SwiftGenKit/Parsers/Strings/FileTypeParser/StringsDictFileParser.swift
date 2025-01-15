@@ -40,8 +40,8 @@ extension Strings {
                             fromFormat: pluralEntry.formatKeyWithVariableValueTypes
                         ),
                         parameters: Parameter.extractParameterNames(
-                            from: pluralEntry.firstOtherRule, 
-                            type: .int
+                            from: pluralEntry.firstOtherRule,
+                            type: pluralEntry.placeholderType
                         ),
                         keyStructureSeparator: options[Option.separator]
                     )
@@ -61,5 +61,13 @@ extension Strings {
 private extension StringsDict.PluralEntry {
     var firstOtherRule: String {
         self.variables.map { $0.rule.other }.first ?? ""
+    }
+    
+    /// - Note: For the first iteration of the named parameters work, we expect  all 
+    /// `.stringsdict` entries to be a count so we can return an integer for the time being.
+    ///
+    /// - Returns: .int
+    var placeholderType: Strings.PlaceholderType {
+        .int
     }
 }

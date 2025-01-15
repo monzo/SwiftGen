@@ -13,9 +13,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>{{potCount}} pot</string>
+			<string>{{pot_count}} pot</string>
 			<key>other</key>
-			<string>{{potCount}} pots</string>
+			<string>{{pot_count}} pots</string>
 		</dict>
 	</dict>
 </dict>
