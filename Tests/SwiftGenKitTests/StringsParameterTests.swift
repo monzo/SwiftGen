@@ -55,7 +55,9 @@ final class StringsParameterTests: XCTestCase {
         let stringsWithMatchingParams = [
             "{{parameter_name}}",
             "{{ parameter_name }}",
+            "{{parameter_name     }}",
             "{{ parameter1_name1 }}",
+            "{{x}}"
         ]
         
         stringsWithMatchingParams.forEach {
@@ -78,7 +80,8 @@ final class StringsParameterTests: XCTestCase {
             "{{parameter-name}}",
             "{{parameter.name}}",
             "{{ Parameter }}",
-            "{{  PARAM123  }}"
+            "{{  PARAM123  }}",
+            "{{X}}"
         ]
         
         stringsWithNonMatchingParams.forEach {

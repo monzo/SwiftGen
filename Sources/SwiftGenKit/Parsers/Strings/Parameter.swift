@@ -53,7 +53,7 @@ private extension Strings.Parameter {
     static let namedParameterRegEx: NSRegularExpression = {
         do {
             return try NSRegularExpression(
-                pattern: #"\{\{\s*([a-z][a-z0-9_]+)\s*\}\}"#,
+                pattern: #"\{\{\s*([a-z][a-z0-9_]*)\s*\}\}"#,
                 options: []
             )
         } catch {
