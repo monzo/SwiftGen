@@ -18,7 +18,7 @@ final class StringsParameterTests: XCTestCase {
 
     func test_extractParameterNames_returnsOneNamedParameter() {
         // Given
-        let string = "Welcome, {{ displayName }}"
+        let string = "Welcome, {{ display_name }}"
         
         // When
         let parametersNames = Strings.Parameter.extractParameterNames(
@@ -27,12 +27,12 @@ final class StringsParameterTests: XCTestCase {
         )
         
         // Then
-        XCTAssertEqual(parametersNames, [.init(name: "displayName", type: .object)])
+        XCTAssertEqual(parametersNames, [.init(name: "display_name", type: .object)])
     }
     
     func test_extractParameterNames_returnsMultipleNamedParameters() {
         // Given
-        let string = "I give {{ appleCount }} apples to {{ name }}"
+        let string = "I give {{ apple_count }} apples to {{ name }}"
         
         // When
         let parameterNames = Strings.Parameter.extractParameterNames(
@@ -44,7 +44,7 @@ final class StringsParameterTests: XCTestCase {
         XCTAssertEqual(
             parameterNames,
             [
-                .init(name: "appleCount", type: .object),
+                .init(name: "apple_count", type: .object),
                 .init(name: "name", type: .object)
             ]
         )
@@ -53,9 +53,9 @@ final class StringsParameterTests: XCTestCase {
     func test_extractParameterNames_expectedRegexMatches() {
         // Given
         let stringsWithMatchingParams = [
-            "{{parameterName}}",
+            "{{parameter_name}}",
             "{{ parameter_name }}",
-            "{{  PARAM123  }}"
+            "{{ parameter1_name1 }}",
         ]
         
         stringsWithMatchingParams.forEach {
@@ -76,7 +76,9 @@ final class StringsParameterTests: XCTestCase {
             "{parameterName}",
             "{{parameter name}}",
             "{{parameter-name}}",
-            "{{parameter.name}}"
+            "{{parameter.name}}",
+            "{{ Parameter }}",
+            "{{  PARAM123  }}"
         ]
         
         stringsWithNonMatchingParams.forEach {
@@ -93,7 +95,7 @@ final class StringsParameterTests: XCTestCase {
     
     func test_extractParameterNames_regexWorksWithOrdinalSuffix() {
         // Given
-        let stringWithOrdinalSuffix = "{{parameterName}}th"
+        let stringWithOrdinalSuffix = "{{parameter_name}}th"
         
         // When
         let parameterNames = Strings.Parameter.extractParameterNames(
@@ -102,7 +104,7 @@ final class StringsParameterTests: XCTestCase {
         )
         
         // Then
-        XCTAssertEqual(parameterNames, [.init(name: "parameterName", type: .object)])
+        XCTAssertEqual(parameterNames, [.init(name: "parameter_name", type: .object)])
     }
     
     func test_extractParameterNames_returnsStringPlaceholderType() {
