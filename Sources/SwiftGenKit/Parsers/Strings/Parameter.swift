@@ -35,10 +35,10 @@ extension Strings.Parameter {
             guard let range = Range(result.range(at: 1), in: string) else {
                 return nil
             }
-            return String(string[range]).snakeToCamelCase
+            return String(string[range])
         }
         
-        return parameterNames.map { .init(name: $0, type: type) }
+        return parameterNames.map { .init(name: $0.snakeToCamelCase, type: type) }
     }
 }
 
@@ -64,7 +64,7 @@ private extension Strings.Parameter {
     }()
 }
 
-// MARK: String Helpers
+// MARK: String Formatting
 
 private extension String {
     /// Converts a `snake_case` string to `camelCase`.

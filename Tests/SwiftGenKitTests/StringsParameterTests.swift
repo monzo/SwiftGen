@@ -69,7 +69,6 @@ final class StringsParameterTests: XCTestCase {
             
             // Then
             XCTAssertFalse(parameterNames.isEmpty)
-            print("M:", parameterNames)
         }
     }
     
