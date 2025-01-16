@@ -79,13 +79,9 @@ private extension String {
         
         guard !components.isEmpty else { return "" }
         
-        return components.enumerated().map { (index, element) in
+        return components.enumerated().map { index, element in
             let lowercased = element.lowercased()
-            if index == 0 {
-                return lowercased
-            } else {
-                return lowercased.capitalizingFirstLetter
-            }
+            return index == 0 ? lowercased : lowercased.capitalizingFirstLetter
         }.joined()
     }
     
