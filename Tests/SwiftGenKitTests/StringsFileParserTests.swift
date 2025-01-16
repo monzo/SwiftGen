@@ -29,7 +29,7 @@ final class StringsFileParserTests: XCTestCase {
         let keys = stringsEntry.map { $0.key }
         XCTAssertEqual(
             keys.sorted(),
-            ["no_parameter", "one_parameter", "two_parameters"]
+            ["no.parameter", "one.parameter", "two.parameters"]
         )
     }
     
