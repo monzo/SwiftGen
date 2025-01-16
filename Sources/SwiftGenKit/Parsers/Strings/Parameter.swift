@@ -35,7 +35,7 @@ extension Strings.Parameter {
             guard let range = Range(result.range(at: 1), in: string) else {
                 return nil
             }
-            return String(string[range])
+            return String(string[range]).snakeToCamelCase
         }
         
         return parameterNames.map { .init(name: $0, type: type) }
@@ -43,6 +43,8 @@ extension Strings.Parameter {
 }
 
 // MARK: - Private Helpers
+
+// MARK: Parameter Regex
 
 private extension Strings.Parameter {
     /// This regular expression is used to match named parameters embedded within double curly braces in a string.
@@ -60,4 +62,34 @@ private extension Strings.Parameter {
             fatalError("Error building the regular expression used to match the named parameter format")
         }
     }()
+}
+
+// MARK: String Helpers
+
+private extension String {
+    /// Converts a `snake_case` string to `camelCase`.
+    ///
+    /// - Note: Handles edge cases such as leading, trailing, and multiple underscores by ignoring them
+    /// and not including empty segments in the output. If the input is an empty string or consists only
+    /// of underscores, the computed property will return an empty string.
+    var snakeToCamelCase: String {
+        guard !self.isEmpty else { return "" }
+
+        let components = self.split(separator: "_")
+        
+        guard !components.isEmpty else { return "" }
+        
+        return components.enumerated().map { (index, element) in
+            let lowercased = element.lowercased()
+            if index == 0 {
+                return lowercased
+            } else {
+                return lowercased.capitalizingFirstLetter
+            }
+        }.joined()
+    }
+    
+    var capitalizingFirstLetter: String {
+        prefix(1).capitalized + dropFirst()
+    }
 }
