@@ -27,7 +27,7 @@ final class StringsParameterTests: XCTestCase {
     )
     
     // Then
-    XCTAssertEqual(parametersNames, [.init(name: "display_name", type: .object)])
+    XCTAssertEqual(parametersNames, [.init(name: "displayName", type: .object)])
   }
   
   func test_extractParameterNames_returnsMultipleNamedParameters() {
@@ -44,7 +44,7 @@ final class StringsParameterTests: XCTestCase {
     XCTAssertEqual(
       parameterNames,
       [
-        .init(name: "apple_count", type: .object),
+        .init(name: "appleCount", type: .object),
         .init(name: "name", type: .object)
       ]
     )
@@ -107,7 +107,7 @@ final class StringsParameterTests: XCTestCase {
     )
     
     // Then
-    XCTAssertEqual(parameterNames, [.init(name: "parameter_name", type: .object)])
+    XCTAssertEqual(parameterNames, [.init(name: "parameterName", type: .object)])
   }
   
   func test_extractParameterNames_returnsStringPlaceholderType() {
@@ -136,5 +136,34 @@ final class StringsParameterTests: XCTestCase {
     
     // Then
     XCTAssertEqual(parameterNames[0].type, placeholderType)
+  }
+  
+  func test_extractParameterNames_convertsSnakeToCamelCase() {
+    // Given
+    let strings = [
+      "{{parameter_name}}",
+      "{{this_is_a_test}}",
+      "{{}}",
+      "{{param_name_}}",
+      "{{foo__bar}}",
+      "{{_}}"
+    ]
+    
+    let expectedResults = [
+      "parameterName",
+      "thisIsATest",
+      "paramName",
+      "fooBar"
+    ]
+    
+    // When
+    let parameters = strings.flatMap {
+      Strings.Parameter.extractParameterNames(from: $0, type: .object)
+    }
+    
+    // Then
+    for (index, parameter) in parameters.enumerated() {
+      XCTAssertEqual(parameter.name, expectedResults[index])
+    }
   }
 }

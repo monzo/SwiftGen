@@ -49,7 +49,7 @@ final class StringsDictFileParserTests: XCTestCase {
     XCTAssertEqual(firstEntryParameters.count, 1)
     XCTAssertEqual(
       firstEntryParameters,
-      [.init(name: "pot_count", type: .int)]
+      [.init(name: "potCount", type: .int)]
     )
   }
 }

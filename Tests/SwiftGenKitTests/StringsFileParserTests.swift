@@ -86,7 +86,7 @@ final class StringsFileParserTests: XCTestCase {
       thirdEntryParameters,
       [
         .init(name: "name", type: .object),
-        .init(name: "message_count", type: .object)
+        .init(name: "messageCount", type: .object)
       ]
     )
   }
