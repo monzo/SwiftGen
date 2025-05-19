@@ -3,53 +3,53 @@ import TestUtils
 import XCTest
 
 final class StringsDictFileParserTests: XCTestCase {
-    private var parser: Strings.StringsDictFileParser!
-    private var options: ParserOptionValues!
+  private var parser: Strings.StringsDictFileParser!
+  private var options: ParserOptionValues!
+  
+  override func setUp() {
+    super.setUp()
+    let options = try! ParserOptionValues(options: [:], available: Strings.Parser.allOptions)
+    parser = Strings.StringsDictFileParser(options: options)
+  }
+  
+  override func tearDown() {
+    parser = nil
+    options = nil
+    super.tearDown()
+  }
+  
+  func test_parseFile_readsKeys() throws {
+    // Given
+    let filePath = Fixtures.resource(for: "LocNamedParameters.stringsdict", sub: .strings)
     
-    override func setUp() {
-        super.setUp()
-        let options = try! ParserOptionValues(options: [:], available: Strings.Parser.allOptions)
-        parser = Strings.StringsDictFileParser(options: options)
-    }
+    // When
+    let stringsDictEntry = try parser.parseFile(at: filePath)
     
-    override func tearDown() {
-        parser = nil
-        options = nil
-        super.tearDown()
-    }
+    // Then
+    let keys = stringsDictEntry
+      .map { $0.key }
+      .sorted()
     
-    func test_parseFile_readsKeys() throws {
-        // Given
-        let filePath = Fixtures.resource(for: "LocNamedParameters.stringsdict", sub: .strings)
-        
-        // When
-        let stringsDictEntry = try parser.parseFile(at: filePath)
-        
-        // Then
-        let keys = stringsDictEntry
-            .map { $0.key }
-            .sorted()
-        
-        XCTAssertEqual(keys, ["pots.count"])
-    }
+    XCTAssertEqual(keys, ["pots.count"])
+  }
+  
+  func test_parseFile_readsParameters() throws {
+    // Given
+    let filePath = Fixtures.resource(for: "LocNamedParameters.stringsdict", sub: .strings)
     
-    func test_parseFile_readsParameters() throws {
-        // Given
-        let filePath = Fixtures.resource(for: "LocNamedParameters.stringsdict", sub: .strings)
-        
-        // When
-        let stringsDictEntry = try parser.parseFile(at: filePath)
-        
-        // Then
-        let parameters = stringsDictEntry
-            .map { $0.parameters }
-            .sorted(by: { $0.count < $1.count })
-        
-        let firstEntryParameters = parameters[0]
-        XCTAssertEqual(firstEntryParameters.count, 1)
-        XCTAssertEqual(
-            firstEntryParameters,
-            [.init(name: "potCount", type: .int)]
-        )
-    }
+    // When
+    let stringsDictEntry = try parser.parseFile(at: filePath)
+    
+    // Then
+    let parameters = stringsDictEntry
+      .map { $0.parameters }
+      .sorted(by: { $0.count < $1.count })
+    
+    let firstEntryParameters = parameters[0]
+    XCTAssertEqual(firstEntryParameters.count, 1)
+    XCTAssertEqual(
+      firstEntryParameters,
+      [.init(name: "potCount", type: .int)]
+    )
+  }
 }
