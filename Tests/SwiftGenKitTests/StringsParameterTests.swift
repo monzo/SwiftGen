@@ -2,6 +2,21 @@
 import XCTest
 
 final class StringsParameterTests: XCTestCase {
+  func test_extractParameterNames_hasPositionalParameters_returnEmptyArray() {
+    // Given
+    let stringWithPositionalParameters = "Welcome, %@"
+    
+    // When
+    let parameterNames = Strings.Parameter.extractParameterNames(
+      from: stringWithPositionalParameters,
+      type: .object,
+      hasPositionalPlaceholders: true
+    )
+    
+    // Then
+    XCTAssertTrue(parameterNames.isEmpty)
+  }
+  
   func test_extractParameterNames_returnEmptyArray() {
     // Given
     let string = "This string has no named parameters"

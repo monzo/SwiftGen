@@ -18,5 +18,36 @@
 			<string>{{pot_count}} pots</string>
 		</dict>
 	</dict>
+    <key>account.title</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@accountTitleTest@</string>
+        <key>accountTitleTest</key>
+        <dict>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>one</key>
+            <string>Your account</string>
+            <key>other</key>
+            <string>Your accounts</string>
+        </dict>
+    </dict>
+    <key>billingUnits.message</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@billingUnitsRule@</string>
+        <key>billingUnitsRule</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>f</string> <key>one</key>
+            <string>%1.2f billing unit will be applied to your account.</string>
+            <key>other</key>
+            <string>%1.2f billing units will be applied to your account.</string>
+            </dict>
+    </dict>
 </dict>
 </plist>
