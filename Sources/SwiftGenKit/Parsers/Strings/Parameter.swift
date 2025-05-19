@@ -17,13 +17,20 @@ extension Strings.Parameter {
   /// - Parameters:
   ///   - string: The input string containing potential parameters
   ///   - type: The placeholder type used to assign a type to each extracted parameter
+  ///   - hasPositionalPlaceholders: A boolean to determine if the string has C-style positional placeholders
   /// - Returns: An array of `Parameter` objects representing the extracted parameters
   ///
   /// Example: "Welcome, {{displayName}}" --> [Parameter(name: "displayName", type: .string)]
   static func extractParameterNames(
     from string: String,
-    type: Strings.PlaceholderType
+    type: Strings.PlaceholderType,
+    hasPositionalPlaceholders: Bool = false
   ) -> [Strings.Parameter] {
+    // If the string contains positional parameters it can't contain named parameters, so return early
+    guard !hasPositionalPlaceholders else {
+      return []
+    }
+    
     let results = namedParameterRegEx.matches(
       in: string,
       options: [],
@@ -38,7 +45,17 @@ extension Strings.Parameter {
       return String(string[range])
     }
     
-    return parameterNames.map { .init(name: $0.snakeToCamelCase, type: type) }
+    let parameters: [Strings.Parameter] = parameterNames.map {
+      .init(name: $0.snakeToCamelCase, type: type)
+    }
+    
+    // Only add a default "count" parameter for integer placeholders when no named parameters
+    // were found. This helps with .stringsdict files that don't explicitly specify parameters.
+    if parameters.isEmpty && type == .int {
+      return [.init(name: "count", type: type)]
+    }
+    
+    return parameters
   }
 }
 

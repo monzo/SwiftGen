@@ -40,7 +40,7 @@ extension Strings {
 }
 
 extension Strings.PlaceholderType {
-  private static let formatTypesRegEx: NSRegularExpression = {
+  static let formatTypesRegEx: NSRegularExpression = {
     // %d/%i/%o/%u/%x with their optional length modifiers like in "%lld"
     let patternInt = "(?:h|hh|l|ll|q|z|t|j)?([dioux])"
     // valid flags for float
