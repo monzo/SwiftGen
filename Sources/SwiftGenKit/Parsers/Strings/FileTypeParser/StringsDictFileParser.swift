@@ -31,9 +31,8 @@ extension Strings {
             return pluralEntry
           }
         
-        return try plurals.map { keyValuePair -> Entry in
-          let (key, pluralEntry) = keyValuePair
-          return Entry(
+        return try plurals.map { key, pluralEntry -> Entry in
+          Entry(
             key: key,
             translation: "Plural format key: \"\(pluralEntry.formatKey)\"",
             types: try PlaceholderType.placeholderTypes(
@@ -41,7 +40,10 @@ extension Strings {
             ),
             parameters: Parameter.extractParameterNames(
               from: pluralEntry.firstOtherRule,
-              type: pluralEntry.placeholderType
+              type: pluralEntry.placeholderType,
+              hasPositionalPlaceholders: Self.containsPositionalParameters(
+                pluralEntry.firstOtherRule
+              )
             ),
             keyStructureSeparator: options[Option.separator]
           )
@@ -57,6 +59,17 @@ extension Strings {
 }
 
 // MARK: - Private Helpers
+
+private extension Strings.StringsDictFileParser {
+  /// Detects if a string contains C-style positional parameters (like %d, %@, etc.)
+  static func containsPositionalParameters(_ string: String) -> Bool {
+    // This regex looks for format specifiers with optional position (e.g., %d, %1$d)
+    // It matches common format specifiers used in Objective-C/Swift
+    let regex = Strings.PlaceholderType.formatTypesRegEx
+    let range = NSRange(location: 0, length: string.utf16.count)
+    return regex.firstMatch(in: string, options: [], range: range) != nil
+  }
+}
 
 private extension StringsDict.PluralEntry {
   var firstOtherRule: String {

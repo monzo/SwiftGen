@@ -30,7 +30,7 @@ final class StringsDictFileParserTests: XCTestCase {
       .map { $0.key }
       .sorted()
     
-    XCTAssertEqual(keys, ["pots.count"])
+    XCTAssertEqual(keys, ["account.title", "billingUnits.message", "pots.count"])
   }
   
   func test_parseFile_readsParameters() throws {
@@ -43,12 +43,30 @@ final class StringsDictFileParserTests: XCTestCase {
     // Then
     let parameters = stringsDictEntry
       .map { $0.parameters }
-      .sorted(by: { $0.count < $1.count })
+      .sorted { lhs, rhs in
+        let lhsName = lhs.first?.name ?? ""
+        let rhsName = rhs.first?.name ?? ""
+        return lhsName < rhsName
+      }
     
     let firstEntryParameters = parameters[0]
-    XCTAssertEqual(firstEntryParameters.count, 1)
+    XCTAssertEqual(firstEntryParameters.count, 0)
     XCTAssertEqual(
       firstEntryParameters,
+      []
+    )
+    
+    let secondEntryParameters = parameters[1]
+    XCTAssertEqual(secondEntryParameters.count, 1)
+    XCTAssertEqual(
+      secondEntryParameters,
+      [.init(name: "count", type: .int)]
+    )
+    
+    let thirdEntryParameters = parameters[2]
+    XCTAssertEqual(thirdEntryParameters.count, 1)
+    XCTAssertEqual(
+      thirdEntryParameters,
       [.init(name: "potCount", type: .int)]
     )
   }
